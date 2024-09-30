@@ -22,7 +22,7 @@ def introduction():
     print("The object is to collect 5 power source items to beat the grand wizard")
     print("Movement Commands: 'up', 'down', 'right', 'left', 'location' to "
           "see your current room, and 'exit' to quit the game")
-    print("To add the power source item to inventory: pick up item")
+    print("To add the power source item to inventory: p")
     print("________________________________________________________________")
 
 
@@ -32,7 +32,7 @@ def gameplay(current_room, rooms, inventory, player_health, wizard_health):
     print()
     new_room = ''
     # if the player enters 'pick up item' it adds item to inventory and deletes it from the current room
-    if movement_command == 'pick up item':
+    if movement_command == 'p':
         item_name = rooms[current_room]["item"]
         if 'item' in rooms[current_room] and rooms[current_room]['item'] == item_name:
             inventory.append(item_name)
