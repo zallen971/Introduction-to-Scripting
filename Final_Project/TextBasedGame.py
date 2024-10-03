@@ -134,7 +134,7 @@ def main():
     rooms = {
         'Sanctuary': {'up': 'The Whispering Gallery', 'right': 'Citadel',
                       'down': 'The Forgotten Chamber', 'left': 'The Emerald Labyrinth'},
-        'The Whispering Gallery': {'down': 'Sanctuary', 'up': None, 'right': None, 'left': None},
+        'The Whispering Gallery': {'down': 'Sanctuary', 'up': None, 'right': None, 'left': None}, # empty room
         'Citadel': {'left': 'Sanctuary', 'right': 'Tower', 'item': 'Spell Book of the Dead',
                     'up': None, 'down': None, },
         'Tower': {'left': 'Citadel', 'down': 'The Keep', 'item': 'Staff of Ancients',
@@ -145,6 +145,7 @@ def main():
                                   'up': None, 'left': None},
         'Shadowed Hall': {'up': 'The Emerald Labyrinth', 'item': 'Amulet of Protection',
                           'right': None, 'left': None, 'down': None},
+        'The Forgotten Chamber': {'up': 'Sanctuary', 'right': None, 'left': None, 'down': None}, # empty room
         'Crystal Cavern': {'up': 'The Keep', 'enemy': 'Grand Wizard', 'right': None,
                            'down': None, 'left': None}  # The enemy room
     }
