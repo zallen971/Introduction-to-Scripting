@@ -10,7 +10,7 @@ beat the Grand Wizard hiding in the Crystal Caverns
 
 If they don't have all items they stand no chance, and it's an immediate defeat!
 
-For debugging purposes - left, down, up, right, right, right, down, down
+For debugging purposes - left, down, up, right, up, down, down, down, up, up, right, right, down, down
 The speed run for each item then to the Grand Wizard hiding in the Crystal Caverns
 """
 import random
@@ -33,8 +33,8 @@ def gameplay(current_room, rooms, inventory, player_health, wizard_health):
     new_room = ''
     # if the player enters 'pick up item' it adds item to inventory and deletes it from the current room
     if movement_command == 'p':
-        item_name = rooms[current_room]["item"]
-        if 'item' in rooms[current_room] and rooms[current_room]['item'] == item_name:
+        if 'item' in rooms[current_room]:
+            item_name = rooms[current_room]["item"]
             inventory.append(item_name)
             print(f"Way to go, you picked up the {item_name}. That's sure to come in handy!\n")
             del rooms[current_room]['item']
@@ -57,22 +57,44 @@ def gameplay(current_room, rooms, inventory, player_health, wizard_health):
         print(f"You're current location is: {current_room}")
         return current_room
     else:
-        print("Invalid movement command, must enter: up, down, right, left, location, exit")
+        print("Invalid movement command, must enter: up, down, right, left, p, location, exit")
 
     """ lets player know they moved from the current room to a new one 
     then sets new room as current room, also checks for Grand Wizard in room 
     and checks if player has all 5 items or not to determine outcome"""
     if new_room:
         print(f"You moved from {current_room} to {new_room}!\n")
+        if new_room == 'The Whispering Gallery':
+            print('The walls are adorned with intricate tapestries from the legends of old.')
+        elif new_room == 'The Moonlit Garden':
+            print('The room is bathed in the soft glow of the moonlight.')
+        elif new_room == 'The Forgotten Chamber':
+            print('The room has been long forgotten, shrouded in darkness.')
+        elif new_room == 'The Emerald Labyrinth':
+            print('Emerald crystals shimmering, there are so many locked doors in here.')
+        elif new_room == 'The Archmage Sanctum':
+            print('Ancient tomes sprawled on a desk, the smell of incense overtaking the air.')
+        elif new_room == 'Shadowed Hall':
+            print('Dark and cold hall seemingly stretched endlessly, little light coming from the torches '
+                  'adorned on the walls.')
+        elif new_room == 'Citadel':
+            print('You can tell this room was an important one in the days of old. Likely where the fate '
+                  'of the kingdom was decided.')
+        elif new_room == 'Tower':
+            print('A place of solitude and mystery. It feels like a place of strength and isolation.')
+        elif new_room == 'The Keep':
+            print('crumbling furniture and structure, a place that once stood for the strength, protectin, '
+                  'and resilience of its people.')
+
 
         # lets the player know that if there is an item in the room they entered or not or if the grand wizard is in there
         if 'enemy' in rooms[new_room]:
             print("The Grand Wizard is in this room!")
-            if len(inventory) == 5:
+            if len(inventory) == 7:
                 print("You are ready to battle the Grand Wizard!\n")
                 battle_sequence(player_health, wizard_health)
                 exit()
-            elif len(inventory) < 5:
+            elif len(inventory) < 7:
                 print("You don't have the power and the Grand Wizard one shot you!")
                 print("Game Over!!")
                 exit()
@@ -80,7 +102,7 @@ def gameplay(current_room, rooms, inventory, player_health, wizard_health):
             print(
                 f"You feel the aura shift and see that there is the {rooms[new_room]['item']} in here, you should pick it up!\n")
         else:
-            print("No item in this room, you can tell.")
+            print("\nNo item in this room, you can tell.")
         return new_room
 
     # Lets player know there isn't a room in the direction if there is none according to rooms dictionary
@@ -113,6 +135,7 @@ def battle_sequence(player_health, wizard_health):
         if wizard_health == 0:
             print("Congratulations, you have defeated the Grand Wizard and won the game!"
                   " Your will is strong and nobody can compare!")
+            print("Reclaim the castle and bring wisdom, stability, and peace back into the lands!")
             return True
 
         print(f"The Grand Wizard attacked you for {wizard_attack} damage")
@@ -133,21 +156,23 @@ def main():
     # Defines the rooms dictionary
     rooms = {
         'Sanctuary': {'up': 'The Whispering Gallery', 'right': 'Citadel',
-                      'down': 'The Forgotten Chamber', 'left': 'The Emerald Labyrinth'},
-        'The Whispering Gallery': {'down': 'Sanctuary', 'up': None, 'right': None, 'left': None}, # empty room
+                      'down': 'The Moonlit Garden', 'left': 'The Emerald Labyrinth'}, # Main entrance room
+        'The Whispering Gallery': {'down': 'Sanctuary', 'up': None, 'right': None, 'left': None, 'item':'Boots of the Flamewalker'}, # Boots of Flamewalker
         'Citadel': {'left': 'Sanctuary', 'right': 'Tower', 'item': 'Spell Book of the Dead',
-                    'up': None, 'down': None, },
+                    'up': None, 'down': None, }, # Book of the dead
+        'The Moonlit Garden': {'up': 'Sanctuary', 'down': 'The Forgotten Chamber', 'left': None, 'right': None}, # empty room
         'Tower': {'left': 'Citadel', 'down': 'The Keep', 'item': 'Staff of Ancients',
-                  'up': None, 'right': None},
+                  'up': None, 'right': None}, # Staff of Ancitents
         'The Keep': {'up': 'Tower', 'down': 'Crystal Cavern', 'item': 'Heart of a Dragon',
-                     'right': None, 'left': None},
+                     'right': None, 'left': None}, # Heart of a Dragon
         'The Emerald Labyrinth': {'right': 'Sanctuary', 'down': 'Shadowed Hall', 'item': 'Orb of Elements',
-                                  'up': None, 'left': None},
+                                  'up': 'The Archmage Sanctum', 'left': None}, # Orb of Elements
         'Shadowed Hall': {'up': 'The Emerald Labyrinth', 'item': 'Amulet of Protection',
-                          'right': None, 'left': None, 'down': None},
-        'The Forgotten Chamber': {'up': 'Sanctuary', 'right': None, 'left': None, 'down': None}, # empty room
+                          'right': None, 'left': None, 'down': None}, # Amulet of Protection
+        'The Forgotten Chamber': {'up': 'The Moonlit Garden', 'item': 'Soul Reaver Sword', 'right': None, 'left': None, 'down': None}, # Soul Reaver Sword
+        'The Archmage Sanctum': {'down': 'The Emerald Labyrinth', 'up': None, 'left': None, 'right': None}, # empty room
         'Crystal Cavern': {'up': 'The Keep', 'enemy': 'Grand Wizard', 'right': None,
-                           'down': None, 'left': None}  # The enemy room
+                           'down': None, 'left': None}  # The enemy room - Grand Wizard
     }
 
     introduction()
@@ -155,8 +180,9 @@ def main():
     player_health = 100
     wizard_health = 100
     current_room = 'Sanctuary'
-    print(f"\nYou have arrived at the castle. You are in {current_room}.")
+    print(f"\nYou have arrived at the castle. You are in the main room {current_room}. Which way should you go?")
     print("You don't have any items yet.")
+
 
     # while loop to handle the game
     while True:
