@@ -30,6 +30,7 @@ def gameplay(rooms, current_room):
         exit()
     else:
         print('Invalid command. Must enter: North, East, South, West, exit')
+        return current_room
 
     """
     If/else statement to inform the player they entered a new room
@@ -65,7 +66,7 @@ def main():
     while game_running:
         next_room = gameplay(rooms, current_room)
         if next_room is None:
-            print("Thanks for playing! Goodby.")
+            print("Thanks for playing!!")
             game_running = False
         else:
             current_room = next_room
