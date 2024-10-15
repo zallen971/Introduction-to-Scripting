@@ -72,6 +72,5 @@ def main():
             current_room = next_room
 
 
-
 if __name__ == '__main__':
     main()
