@@ -20,8 +20,8 @@ import random
 def introduction():
     print("\nThe Wizard's Will")
     print("The object is to collect 7 power source items to beat the grand wizard")
-    print("Movement Commands: 'up', 'down', 'right', 'left', 'location' to "
-          "see your current room, and 'exit' to quit the game")
+    print("Movement Commands: 'up', 'down', 'right', 'left', 'status' to "
+          "see your current status, and 'exit' to quit the game")
     print("To add the power source item to inventory: p")
     print("________________________________________________________________\n")
 
@@ -62,8 +62,8 @@ def gameplay(current_room, rooms, inventory, player_health, wizard_health):
               ' and confront the Grand Wizard!')
         print('Exiting the game...')
         exit()  # exit the game
-    elif movement_command == 'location':  # if the player enters location it will print the current room location
-        print(f"You're current location is: {current_room}")
+    elif movement_command == 'status':  # if the player enters location it will print the current room location
+        show_status(current_room, rooms)
         return current_room
     else:
         print("Invalid movement command, must enter: up, down, right, left, p, location, exit")  # invalid command
@@ -72,6 +72,7 @@ def gameplay(current_room, rooms, inventory, player_health, wizard_health):
     # lets the player know they moved to a new room
     if new_room:
         print(f'You moved from {current_room} to {new_room}')
+        current_room = new_room
 
         # prints a description of the room only if the room has one
         if new_room and new_room in rooms and 'description' in rooms[new_room]:
@@ -79,24 +80,21 @@ def gameplay(current_room, rooms, inventory, player_health, wizard_health):
             if description.strip():  # only print description if the room has one
                 print(f"\n{rooms[new_room]['description']}\n")
 
-            '''lets the player know that if there is an item in the room 
-            they entered or not or if the grand wizard is in there'''
-            if 'enemy' in rooms[
-                new_room]:  # if the room has the grand wizard and the player has 7 items call battle function
-                print("The Grand Wizard is in this room!")
-                if len(inventory) == 7:
-                    print("You are ready to battle the Grand Wizard!\n")
-                    if battle_sequence(player_health, wizard_health):
-                        exit()
-                elif len(inventory) < 7:  # if the player doesn't have all 7 items, immediate defeat
-                    print("You don't have the power and the Grand Wizard one shot you!")
-                    print("Game Over!!")
+        show_status(current_room, rooms)
+
+        '''lets the player know that if there is an item in the room 
+        they entered or not or if the grand wizard is in there'''
+        if 'enemy' in rooms[
+            new_room]:  # if the room has the grand wizard and the player has 7 items call battle function
+            print("The Grand Wizard is in this room!")
+            if len(inventory) == 7:
+                print("You are ready to battle the Grand Wizard!\n")
+                if battle_sequence(player_health, wizard_health):
                     exit()
-            elif 'item' in rooms[new_room]:  # alert player to an item in the room
-                print(
-                    f"You feel the aura shift and see that there is the {rooms[new_room]['item']} in here, you should pick it up!\n")
-            else:
-                print("\nNo item in this room, you can tell.")
+            elif len(inventory) < 7:  # if the player doesn't have all 7 items, immediate defeat
+                print("You don't have the power and the Grand Wizard one shot you!")
+                print("Game Over!!")
+                exit()
 
         return new_room
 
@@ -107,6 +105,26 @@ def display_inventory(inventory):
         print("Your inventory: ", ", ".join(inventory))
     else:
         print("You don't have any items yet.\n")
+
+
+# function to show the status including current room, directions and items
+def show_status(current_room, rooms):
+    # display the current room
+    print(f'\nYou are currently in: {current_room}')
+
+    # check for items in the current room and display them
+    if 'item' in rooms[current_room]:
+        print(
+            f'\nYou feel the aura shift and see that there is the {rooms[current_room]["item"]} in here, you should '
+            f'pick it up!')  # inform player there is an item in the room
+        print('Enter p to pick the item up.\n')  # tell player the command to pick item up
+
+    # display the valid movement directions
+    directions = [direction for direction in ['up', 'down', 'left', 'right', ] if rooms[current_room].get(direction)]
+    if directions:
+        print(f'You can move: {", ".join(directions)}')  # tells player the valid movements that are available from room
+    else:
+        print('There are no valid directions you can move.')
 
 
 # battle sequence function
