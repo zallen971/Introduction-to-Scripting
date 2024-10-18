@@ -16,7 +16,6 @@ The speed run for each item then to the Grand Wizard hiding in the Crystal Caver
 import random
 
 
-
 # Introduction function
 def introduction():
     print("\nThe Wizard's Will")
@@ -33,22 +32,23 @@ def introduction():
 
 
 # Gameplay: movement command , current/new room, inventory, grand wizard check
-def gameplay(current_room, rooms, inventory, player_health, wizard_health):
+def gameplay(current_room, rooms, inventory, player_health, wizard_health, visited_rooms):
     movement_command = input("What is your movement command: ")
     print()
     new_room = ''
+
     # if the player enters 'pick up item' it adds item to inventory and deletes it from the current room
     if movement_command == 'p':
         if 'item' in rooms[current_room]:
             item_name = rooms[current_room]["item"]  # gets the item in the room
             inventory.append(item_name)  # adds the item to the inventory list if the player enters p
             print('----------------------------------------------------------------')
-            print(f"Way to go, you picked up the {item_name}. That's sure to come in handy!\n")
+            print(f"You picked up the {item_name}. You're hit with a surge and feel your power grow!\n")
             del rooms[current_room]['item']  # deletes the item from the room so it doesn't keep notifying player
+            visited_rooms.add(current_room)
             if len(inventory) == 7:
                 print("You have collected all 7 items!\n")
-        else:
-            print("No item in this room, you can tell.")
+
         return current_room
 
     # Movement commands for the player, also handles the exit and location, and invalid command
@@ -65,7 +65,7 @@ def gameplay(current_room, rooms, inventory, player_health, wizard_health):
         print('Exiting the game...')
         exit()  # exit the game
     elif movement_command == 'status':  # if the player enters status it will call the show_status function
-        show_status(current_room, rooms)
+        show_status(current_room, rooms, visited_rooms)
         return current_room
     else:
         print("Invalid movement command, must enter: up, down, right, left, p, location, exit")  # invalid command
@@ -80,11 +80,11 @@ def gameplay(current_room, rooms, inventory, player_health, wizard_health):
 
         # prints a description of the room only if the room has one
         if new_room and new_room in rooms and 'description' in rooms[new_room]:
-            description = rooms[new_room]['description']
+            description = rooms[new_room]['description']  # gets the description if there is one for the new room
             if description.strip():  # only print description if the room has one
                 print(f"\n{rooms[new_room]['description']}\n")
 
-        show_status(current_room, rooms)
+        show_status(current_room, rooms, visited_rooms)
 
         '''lets the player know that if there is an item in the room 
         they entered or not or if the grand wizard is in there'''
@@ -111,8 +111,8 @@ def display_inventory(inventory):
         print("You don't have any items yet.\n")
 
 
-# function to show the status including current room, directions and items
-def show_status(current_room, rooms):
+# function to show the status including current room, directions, visited rooms and items
+def show_status(current_room, rooms, visited_rooms):
     # display the current room
     print(f'\nYou are currently in: {current_room}')
 
@@ -122,6 +122,10 @@ def show_status(current_room, rooms):
             f'\nYou feel the aura shift and see that there is the {rooms[current_room]["item"]} in here, you should '
             f'pick it up!')  # inform player there is an item in the room
         print('Enter p to pick the item up.\n')  # tell player the command to pick item up
+    elif current_room in visited_rooms:  # if the room has been previously visited and the item was picked up already
+        print("\nYou remember grabbing the item from this room.\n")
+    else:
+        print('\nYou can feel that this room is empty with no item in here.\n')
 
     # display the valid movement directions
     directions = [direction for direction in ['up', 'down', 'left', 'right', ] if rooms[current_room].get(direction)]
@@ -248,18 +252,22 @@ def main():
     player_health = 100
     wizard_health = 100
     current_room = 'Sanctuary'
-    print('----------------------------------------------------------------------------------------------------------------------------------------------------------------\n')
-    print("After traveling many of fortnights, you finally start to see a building off into the distance. Although it's shrouded in darkness, you know for certain "
-          "that it is the castle you are looking for")
-    print("You are finally at the front of the castle, staring at the entrance! As you push open the front doors, you are greeted with lanters lighting "
-          "the room. You look up and see a sign hanging, one simple word which you believe to be the name of the current room you're in; "
-           f"{current_room}. Looking around, you decide which way should you go.....\n")
+    visited_rooms = set()  # tracks visited rooms
+    print(
+        '----------------------------------------------------------------------------------------------------------------------------------------------------------------\n')
+    print(
+        "After traveling many of fortnights, you finally start to see a building off into the distance. Although it's shrouded in darkness, you know for certain "
+        "that it is the castle you are looking for")
+    print(
+        "You are finally at the front of the castle, staring at the entrance! As you push open the front doors, you are greeted with lanters lighting "
+        "the room. You look up and see a sign hanging, one simple word which you believe to be the name of the current room you're in; "
+        f"{current_room}. Looking around, you decide which way should you go.....\n")
     print("You don't have any items yet.")
 
     # while loop to handle the game
     while True:
         # calls the player command function
-        current_room = gameplay(current_room, rooms, inventory, player_health, wizard_health)
+        current_room = gameplay(current_room, rooms, inventory, player_health, wizard_health, visited_rooms)
 
         # calls the display inventory function
         display_inventory(inventory)
