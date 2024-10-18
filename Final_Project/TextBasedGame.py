@@ -14,7 +14,7 @@ For debugging purposes - left, down, up, right, up, down, down, down, up, up, ri
 The speed run for each item then to the Grand Wizard hiding in the Crystal Caverns
 """
 import random
-import os
+
 
 
 # Introduction function
