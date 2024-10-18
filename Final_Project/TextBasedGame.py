@@ -14,6 +14,7 @@ For debugging purposes - left, down, up, right, up, down, down, down, up, up, ri
 The speed run for each item then to the Grand Wizard hiding in the Crystal Caverns
 """
 import random
+import os
 
 
 # Introduction function
@@ -25,7 +26,7 @@ def introduction():
     print("To add the power source item to inventory: p")
     print("________________________________________________________________\n")
 
-    with open('backstory.txt', 'r', encoding='utf-8') as file:  # calls the backstory text file
+    with open('./backstory.txt', 'r', encoding='utf-8') as file:  # calls the backstory text file
         backstory_content = file.read()
 
     print(backstory_content.rstrip())
@@ -41,6 +42,7 @@ def gameplay(current_room, rooms, inventory, player_health, wizard_health):
         if 'item' in rooms[current_room]:
             item_name = rooms[current_room]["item"]  # gets the item in the room
             inventory.append(item_name)  # adds the item to the inventory list if the player enters p
+            print('----------------------------------------------------------------')
             print(f"Way to go, you picked up the {item_name}. That's sure to come in handy!\n")
             del rooms[current_room]['item']  # deletes the item from the room so it doesn't keep notifying player
             if len(inventory) == 7:
@@ -62,7 +64,7 @@ def gameplay(current_room, rooms, inventory, player_health, wizard_health):
               ' and confront the Grand Wizard!')
         print('Exiting the game...')
         exit()  # exit the game
-    elif movement_command == 'status':  # if the player enters location it will print the current room location
+    elif movement_command == 'status':  # if the player enters status it will call the show_status function
         show_status(current_room, rooms)
         return current_room
     else:
@@ -71,7 +73,9 @@ def gameplay(current_room, rooms, inventory, player_health, wizard_health):
 
     # lets the player know they moved to a new room
     if new_room:
-        print(f'You moved from {current_room} to {new_room}')
+        print('--------------------------------')
+        print(f"You decide it's time to move to another room....")
+        print(f'You move from {current_room} to {new_room}')
         current_room = new_room
 
         # prints a description of the room only if the room has one
@@ -244,7 +248,12 @@ def main():
     player_health = 100
     wizard_health = 100
     current_room = 'Sanctuary'
-    print(f"\nYou have arrived at the castle. You are in the main room {current_room}. Which way should you go?\n")
+    print('----------------------------------------------------------------------------------------------------------------------------------------------------------------\n')
+    print("After traveling many of fortnights, you finally start to see a building off into the distance. Although it's shrouded in darkness, you know for certain "
+          "that it is the castle you are looking for")
+    print("You are finally at the front of the castle, staring at the entrance! As you push open the front doors, you are greeted with lanters lighting "
+          "the room. You look up and see a sign hanging, one simple word which you believe to be the name of the current room you're in; "
+           f"{current_room}. Looking around, you decide which way should you go.....\n")
     print("You don't have any items yet.")
 
     # while loop to handle the game
