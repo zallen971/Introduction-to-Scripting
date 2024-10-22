@@ -1,0 +1,8 @@
+A cashier distributes change using the maximum number of five-dollar bills,
+followed by one-dollar bills. Write a single statement that assigns num_ones with the number
+of distributed one-dollar bills given amount_to_change. Hint: Use %.
+
+
+Sample output with input: 19
+Change for $ 19
+3 five dollar bill(s) and 4 one dollar bill(s)

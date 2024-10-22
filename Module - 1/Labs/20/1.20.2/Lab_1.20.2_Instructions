@@ -1,0 +1,10 @@
+Given variables angle_elev and shadow_len that represent the angle of elevation and the shadow length of a tree,
+respectively, assign tree_height with the height of the tree.
+
+
+Ex: If the input is:
+0.5236
+17.5
+then the output is:
+Tree height: 10.103658280211672
+Note: tree_height = tan(angle_elev) * shadow_len

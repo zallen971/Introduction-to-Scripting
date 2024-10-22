@@ -25,7 +25,7 @@ def introduction():
     print("To add the power source item to inventory: p")
     print("________________________________________________________________\n")
 
-    with open('./backstory.txt', 'r', encoding='utf-8') as file:  # calls the backstory text file
+    with open('backstory.txt', 'r', encoding='utf-8') as file:  # calls the backstory text file
         backstory_content = file.read()
 
     print(backstory_content.rstrip())
