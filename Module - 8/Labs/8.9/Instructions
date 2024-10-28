@@ -1,0 +1,18 @@
+Complete the Car class by creating an attribute purchase_price (type int) and
+the method print_info() that outputs the car's information.
+
+Ex: If the input is:
+
+2011
+18000
+2018
+
+where 2011 is the car's model year, 18000 is the purchase price, and 2018 is the current year,
+then print_info() outputs:
+
+
+Car's information:
+   Model year: 2011
+   Purchase price: 18000
+   Current value: 5770
+Note: print_info() should use three spaces for indentation.

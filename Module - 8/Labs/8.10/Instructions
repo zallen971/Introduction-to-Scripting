@@ -1,0 +1,17 @@
+Complete the Team class implementation. For the instance method get_win_percentage(),
+the formula is: team_wins / (team_wins + team_losses)
+
+Note: Use floating-point division.
+
+Ex: If the input is:
+
+Ravens
+13
+3
+where Ravens is the team's name, 13 is the number of team wins, and 3 is the number of team losses,
+the output is:
+
+Congratulations, Team Ravens has a winning average!
+If the input is Angels 80 82, the output is:
+
+Team Angels has a losing average.
