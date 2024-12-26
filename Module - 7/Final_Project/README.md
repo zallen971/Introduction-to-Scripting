@@ -81,7 +81,7 @@ Rooms Overview -
 8. Shadowed Hall: Contains the Amulet of Protection
 9. The Forgotten Chamber: Contains the Soul Reaver Sword
 10. The Archmage Sanctum: Empty room
-11. Crystal Vavern: The Grand Wizard's Lair
+11. Crystal Cavern: The Grand Wizard's Lair
 
 ----------------------------------------------------------------------------------------------------------------------------
 
