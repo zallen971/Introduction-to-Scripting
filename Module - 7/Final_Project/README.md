@@ -2,7 +2,7 @@ The Wizards Will Text-Based Adventure Game
 
 Overview
 
-This project involved creating a text-based aventure game in Python. The game requred the player to navigate through rooms, collect items, and avoid the villian to win. The objective is to collect all the items before entering the room with the villain.
+This project involved creating a text-based aventure game in Python. The game required the player to navigate through rooms, collect items, and avoid the villain to win. The objective is to collect all the items before entering the room with the villain.
 
 Summary:
 
